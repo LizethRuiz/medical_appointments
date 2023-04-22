@@ -1,3 +1,4 @@
+/** Here we have a object with the properties that are used in deferents parts of project to manage messages */
 module.exports = {
   //Global Alert Messages
   elementNotFound: 'Element not found',
