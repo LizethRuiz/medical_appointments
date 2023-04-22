@@ -3,8 +3,90 @@
 ## Summary
 
 This is a project that permit to manage medical appointments
-👩🏼‍⚕️👨🏼‍⚕️ If you are a doctor you can do an account and start to add your schedule, see your appointments scheduled by patients
-🤒 If you are a patient you can do an account to see doctors, and make your appointments
+
+- 👩🏼‍⚕️👨🏼‍⚕️ If you are a doctor you can do an account and start to add your schedule, see your appointments scheduled by patients
+- 🤒 If you are a patient you can do an account to see doctors, and make your appointments
+
+### Main Entities
+
+Entity Diagram Meanings
+
+| Value (left) | Value (right) | Meaning                       |
+| ------------ | ------------- | ----------------------------- |
+| \|o          | o\|           | Zero or one                   |
+| \|\|         | \|\|          | Exactly one                   |
+| }o           | o{            | Zero or more (no upper limit) |
+| }\|          | \|{           | One or more (no upper limit)  |
+
+- PK -> PrimaryKey
+- FK -> ForeignKey
+
+```mermaid
+erDiagram
+
+  USER {
+    integer id PK
+    string name
+    string lastName
+    string email
+    string password
+    string phone
+    boolean deleted
+    date createdAt
+    date updatedAt
+  }
+
+  DOCTOR {
+    integer id PK
+    string license
+    string speciality
+    integer userId FK
+    integer addressId FK
+    boolean deleted
+    date createdAt
+    date updatedAt
+  }
+
+  PATIENT {
+    integer id PK
+    string allergies
+    integer age
+    boolean deleted
+    integer userId FK
+    date createdAt
+    date updatedAt
+  }
+
+  SCHEDULE {
+    integer id Pk
+    date startDate
+    date endDate
+    integer doctorId FK
+    boolean deleted
+    date createdAt
+    date updatedAt
+  }
+
+  APPOINTMENT {
+    integer id Pk
+    date startDate
+    date endDate
+    string notes
+    integer doctorId FK
+    integer patientId FK
+    boolean deleted
+    boolean canceled
+    date createdAt
+    date updatedAt
+  }
+
+  DOCTOR ||--|| USER : contains
+  DOCTOR ||--o{ SCHEDULE : creates
+  DOCTOR ||--o{ APPOINTMENT : contains
+  PATIENT ||--o{ APPOINTMENT : creates
+  PATIENT ||--|| USER : contains
+
+```
 
 ## Techincal Structure Project
 
@@ -48,7 +130,7 @@ In this folder we have the index file with the database connections, also the mi
 
 In the file environemnt, there is an object with env variables that are used in differents parts of the project
 
-# Run the Project 🚀
+## Run the Project 🚀
 
 To execute the project, you can do it in two ways, the first one without manage containers, and the second one using docker container
 
@@ -90,8 +172,8 @@ See the docs: https://sequelize.org/docs/v6/other-topics/migrations/#:~:text=Cre
 
 _Note: You dont' need execute migrations, these are executed when the server is running. This is only extra information to know how the migrations can be charged in database_
 
-## See the documentation End Points 📃
+## See the End Points documentation 📃
 
-To see the documentation you need running the project and go to the url /docs
+To see the documentation you need running the project and go to the url `/docs`
 
 http://localhost:5050/docs
