@@ -1,11 +1,12 @@
 import message from './constants';
-import { getRangeDayLZfromUTC, getDatesMonthInLocalZone } from '../utils/dates';
-import { zonedTimeToUtc } from 'date-fns-tz';
-import { TIME_ZONE } from '../../config/environment';
-import { isEmpty } from './nativeMethods';
 
-import { Op } from 'sequelize';
-
+/**This function permit to get a instance of model, calling the findOne funtion sequelize
+ * Parameters:
+ * data object with properties and values to make query in database, as model, where, attributes, order, include
+ * Response:
+ * Raise a error when element not found
+ * Response the instance
+ */
 const findOne = async (data) => {
   try {
     let found = await data.model.findOne(data);
@@ -18,8 +19,15 @@ const findOne = async (data) => {
   }
 };
 
+/**This function permit to get a list of a table, calling the findAll funtion sequelize
+ * Parameters:
+ * data object with properties and values to make query in database, as model, where, attributes, order, include
+ * Response:
+ * Response the list in properties count:Number of elements and rows: elements' list
+ */
 const findAll = async (data) => {
   try {
+    //Order the element by createdAt attribute if order property in data is not
     data.order = data.order
       ? [...data.order, ['createdAt', 'DESC']]
       : [['createdAt', 'DESC']];
@@ -32,6 +40,12 @@ const findAll = async (data) => {
   }
 };
 
+/**This function permit to create a instance, calling the create funtion sequelize
+ * Parameters:
+ * data object with properties and values to make query in database, as model, where, attributes, order, include
+ * Response:
+ * Response the new registry
+ */
 const create = async (model, data) => {
   try {
     let registry = await model.create(data);
@@ -42,6 +56,7 @@ const create = async (model, data) => {
   }
 };
 
+/** This function permit to update a registry */
 const update = async (model, id, data) => {
   try {
     let registry = await model.findOne({ where: { id, statusDelete: false } });
@@ -56,12 +71,13 @@ const update = async (model, id, data) => {
   }
 };
 
+/** This function permit to delete a registry, updating deleted attribute in tables */
 const deleted = async (model, id) => {
   try {
-    let registry = await model.findOne({ where: { id, statusDelete: false } });
+    let registry = await model.findOne({ where: { id, deleted: false } });
     if (!registry) throw new Error(`${message.elementNotFound}, 404`);
 
-    registry.update({ statusDelete: true });
+    registry.update({ deleted: true });
 
     return message.elementDeleted;
   } catch (error) {
@@ -69,6 +85,7 @@ const deleted = async (model, id) => {
   }
 };
 
+/** This function permit get values limit and offset to pagination query */
 const pagination = async (page, pageSize) => {
   try {
     page = page ? (page == 0 ? 1 : page) : 1;
@@ -81,99 +98,4 @@ const pagination = async (page, pageSize) => {
   }
 };
 
-const queryByDates = async (query, field) => {
-  try {
-    let response = null;
-    if (
-      (!isEmpty(query.month) && !isEmpty(query.year)) ||
-      !isEmpty(query.date)
-    ) {
-      let dates = null;
-
-      if (query.month && query.year) {
-        dates = await getDatesMonthInLocalZone(query.month, query.year);
-      }
-      if (query.date) {
-        dates = await getRangeDayLZfromUTC(query.date, LOCAL_ZONE);
-      }
-
-      if (dates) {
-        let startDate = dates.startUTC;
-        let finishDate = dates.finishUTC;
-
-        response = [
-          {
-            [field]: {
-              [Op.gte]: startDate,
-            },
-          },
-          {
-            [field]: {
-              [Op.lt]: finishDate,
-            },
-          },
-        ];
-      }
-    }
-    return response;
-  } catch (error) {
-    throw new Error(error);
-  }
-};
-
-const crudCascade = async (
-  data,
-  moduleInsert,
-  findElement,
-  foreignKey,
-  valueForeignKey
-) => {
-  try {
-    await moduleInsert.update(
-      { statusDelete: true },
-      { where: { [foreignKey]: valueForeignKey } }
-    );
-
-    for (let i = 0; i < data.length; i++) {
-      let registry = data[i];
-      registry[foreignKey] = valueForeignKey;
-      registry['statusDelete'] = false;
-      let elementAdded;
-
-      let where = { [foreignKey]: valueForeignKey };
-
-      if (findElement !== null)
-        where = {
-          [findElement]: registry[findElement],
-          [foreignKey]: valueForeignKey,
-        };
-
-      let find = await moduleInsert.findOne({
-        where: where,
-      });
-
-      if (find) {
-        elementAdded = await find.update(registry);
-      } else {
-        elementAdded = await moduleInsert.create(registry);
-      }
-
-      data[i]['id'] = elementAdded.id;
-    }
-
-    return data;
-  } catch (error) {
-    throw new Error(error);
-  }
-};
-
-export {
-  create,
-  findOne,
-  findAll,
-  update,
-  deleted,
-  crudCascade,
-  pagination,
-  queryByDates,
-};
+export { create, findOne, findAll, update, deleted, pagination };

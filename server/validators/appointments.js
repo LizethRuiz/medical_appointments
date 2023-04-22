@@ -9,6 +9,11 @@ import { check } from 'express-validator';
 const Doctor = models.doctors;
 const durationAppointmentMin = 40;
 
+/** These functions are executed before the controller to validate and prepare the data in body or req
+ * use the express validator package to manage exceptions, there are many rules that you can use
+ * like indicate if a property is empty and raise a error
+ */
+
 const validate = [
   check('startDate').not().isEmpty().withMessage(message.dateReq),
   check('doctorId').not().isEmpty().withMessage(message.doctorReq),

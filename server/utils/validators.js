@@ -1,6 +1,7 @@
 import { validationResult } from 'express-validator';
 import { getResponse } from './responses';
 
+/** Function to manage validations results */
 const validateResult = (req, res, next) => {
   try {
     validationResult(req).throw();
