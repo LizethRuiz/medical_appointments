@@ -1,6 +1,6 @@
 # Medical Appointments 👩🏼‍⚕️
 
-## Structure Project
+## Techincal Structure Project
 
 The stack in this project have the next technologies:
 
@@ -56,7 +56,7 @@ To execute the project, you should do the next steps:
 4. In the project's root create a file called .env where you will put the environment variables, you should take the .env.example file as a reference
 5. In the terminal you should go to the root folder and exec the next steps
 6. `npm install` -> Install all package with npm install (the npm will be our Node Package Managment)
-7. `node index.js` -> To run the server execute the index file
+7. `npm run start` -> To run the server execute the index file
 
 ## Using Docker
 
@@ -81,3 +81,5 @@ See the docs: https://sequelize.org/docs/v6/other-topics/migrations/#:~:text=Cre
 ### 3. Exec migrations
 
 `npx sequelize db:migrate --url "postgres://DB_USER:DB_PASSWORD@DB_HOST:DB_PORT/DB_NAME"`
+
+_Note: You dont' need execute migrations, these are executed when the server is running. This is only extra information to know how the migrations can be charged in database _

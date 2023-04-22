@@ -86,7 +86,7 @@ const checkAvailability = async (req, res) => {
     if (appointments.rows.length !== 0)
       return httpResponse(400, message.busySchedule, res);
 
-    return httpResponse(200, appointments, res);
+    return httpResponse(200, message.availableSchedule, res);
   } catch (error) {
     let { status, message } = getResponse(error);
     return httpResponse(status, message, res);
@@ -101,7 +101,7 @@ const checkAvailability = async (req, res) => {
  *  (This value is calculated taking the startDate and adding 40 minutes)
  * Responses:
  * - 400 -> We get a 400 status when validators module raise exception
- * - 201 -> We get a 201 when the appointment was created
+ * - 201 -> We get a 201 when the appointment was create
  */
 const createAppointment = async (req, res) => {
   try {

@@ -82,7 +82,7 @@ const getSchedule = async (req, res) => {
  * In the database is saved the doctor id, this is obtained from  req user
  * Responses:
  * - 400 -> We get a 400 status when validators module raise exception
- * - 201 -> We get a 201 when the schedule was created
+ * - 201 -> We get a 201 when the schedule was create
  */
 const createSchedule = async (req, res) => {
   try {
