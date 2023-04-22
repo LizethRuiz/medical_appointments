@@ -116,7 +116,7 @@ const createAppointment = async (req, res) => {
   }
 };
 
-/** This controller permit to get a list's appointment according my rol,
+/** This controller permit to get a appointments' list according my rol,
  * - If I'm a patient I'm gonna get appointments with my patient Id
  * - if I'm a doctor I'm gonna get appointments with my doctor Id
  * The above is thanks to the user property in req that contains information about the user
