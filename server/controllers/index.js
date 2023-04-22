@@ -1,3 +1,4 @@
+/** Import and exports controllers files */
 import * as doctors from './doctors';
 import * as patients from './patients';
 import * as schedules from './schedule';

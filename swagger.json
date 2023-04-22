@@ -43,7 +43,7 @@
                   },
                   "license": {
                     "type": "string",
-                    "example": "120938"
+                    "example": "1209389"
                   },
                   "state": {
                     "type": "string",
@@ -212,7 +212,7 @@
             "description": "Unexpected response - internal error"
           }
         },
-        "security": [{ "token": ["read"] }]
+        "security": [{ "bearerAuth": ["read"] }]
       }
     },
     "/api/v1/patients/registry": {
@@ -328,11 +328,13 @@
                 "properties": {
                   "email": {
                     "type": "string",
-                    "description": "Email"
+                    "description": "Email",
+                    "example": "juanperez@gmail.com"
                   },
                   "password": {
                     "type": "string",
-                    "description": "Contraseña"
+                    "description": "Contraseña",
+                    "example": "mipassword"
                   }
                 }
               }
@@ -444,7 +446,7 @@
             "description": "Unexpected response - internal error"
           }
         },
-        "security": [{ "token": ["read"] }]
+        "security": [{ "bearerAuth": ["read"] }]
       },
       "post": {
         "tags": ["Schedule"],
@@ -460,43 +462,49 @@
                 "properties": {
                   "dates": {
                     "type": "array",
-                    "example": "[{'startDate':'2023-05-20','endDate':'2023-05-21'}] }"
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "startDate": {
+                          "type": "date",
+                          "example": "2023-05-20T20:00:00.000Z"
+                        },
+                        "endDate": {
+                          "type": "date",
+                          "example": "2023-05-20T22:40:00.000Z"
+                        }
+                      }
+                    }
                   }
                 }
               }
             }
-          },
-          "responses": {
-            "201": {
-              "description": "Information has been added",
-              "content": {}
-            },
-            "400": {
-              "description": "Invalid request",
-              "schema": {
-                "type": "object",
-                "example": [
-                  {
-                    "errors": "Dates are required"
-                  },
-                  {
-                    "errors": "Start date is required"
-                  },
-                  {
-                    "errors": "Finish date is required"
-                  }
-                ]
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Information has been added",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string",
+                  "example": "Information has been added"
+                }
               }
-            },
-            "401": {
-              "description": "This endpoint is secured - **Token required**."
-            },
-            "default": {
-              "description": "Unexpected response - internal error"
             }
           },
-          "security": [{ "token": ["write"] }]
-        }
+          "400": {
+            "description": "Invalid request",
+            "content": {}
+          },
+          "401": {
+            "description": "This endpoint is secured - **Token required**."
+          },
+          "default": {
+            "description": "Unexpected response - internal error"
+          }
+        },
+        "security": [{ "bearerAuth": ["read"] }]
       }
     },
     "/api/v1/appointments": {
@@ -581,68 +589,79 @@
                 }
               }
             }
-          },
-          "responses": {
-            "201": {
-              "description": "Information has been added",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "properties": {
-                      "startDate": {
-                        "type": "date",
-                        "example": "2023-05-20T20:20:00.000Z"
-                      },
-                      "endDate": {
-                        "type": "date",
-                        "example": "2023-05-20T21:00:00.000Z"
-                      },
-                      "doctorId": {
-                        "type": "integer",
-                        "example": 3
-                      },
-                      "patientId": {
-                        "type": "integer",
-                        "example": 3
-                      },
-                      "notes": {
-                        "type": "string",
-                        "example": null
-                      }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Information has been added",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "startDate": {
+                      "type": "date",
+                      "example": "2023-05-20T20:20:00.000Z"
+                    },
+                    "endDate": {
+                      "type": "date",
+                      "example": "2023-05-20T21:00:00.000Z"
+                    },
+                    "doctorId": {
+                      "type": "integer",
+                      "example": 3
+                    },
+                    "patientId": {
+                      "type": "integer",
+                      "example": 3
+                    },
+                    "notes": {
+                      "type": "string",
+                      "example": null
                     }
                   }
                 }
               }
-            },
-            "400": {
-              "description": "Invalid request",
-              "schema": {
-                "type": "object",
-                "example": [
-                  {
-                    "errors": "Date and hour are required"
-                  },
-                  {
-                    "errors": "The doctor Id is required"
-                  },
-                  {
-                    "errors": "Doctor registry not found"
-                  },
-                  {
-                    "errors": "This schedule has already been taken"
-                  }
-                ]
-              }
-            },
-            "401": {
-              "description": "This endpoint is secured - **Token required**."
-            },
-            "default": {
-              "description": "Unexpected response - internal error"
             }
           },
-          "security": [{ "token": ["write"] }]
-        }
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "startDate": {
+                      "type": "date",
+                      "example": "2023-05-20T20:20:00.000Z"
+                    },
+                    "endDate": {
+                      "type": "date",
+                      "example": "2023-05-20T21:00:00.000Z"
+                    },
+                    "doctorId": {
+                      "type": "integer",
+                      "example": 3
+                    },
+                    "patientId": {
+                      "type": "integer",
+                      "example": 3
+                    },
+                    "notes": {
+                      "type": "string",
+                      "example": null
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "This endpoint is secured - **Token required**."
+          },
+          "default": {
+            "description": "Unexpected response - internal error"
+          }
+        },
+        "security": [{ "bearerAuth": ["read"] }]
       }
     }
   },
@@ -708,6 +727,12 @@
         "type": "object",
         "properties": { "name": { "type": "string", "example": "John Doe" } }
       }
+    }
+  },
+  "schemas": {
+    "error": {
+      "type": "string",
+      "example": "Name id required"
     }
   }
 }

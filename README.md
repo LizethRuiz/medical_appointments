@@ -3,8 +3,9 @@
 ## Summary
 
 This is a project that permit to manage medical appointments
-👩🏼‍⚕️👨🏼‍⚕️ If you are a doctor you can do an account and start to add your schedule, see your appointments scheduled by patients
-🤒 If you are a patient you can do an account to see doctors, and make your appointments
+
+- 👩🏼‍⚕️👨🏼‍⚕️ If you are a doctor you can do an account and start to add your schedule, see your appointments scheduled by patients
+- 🤒 If you are a patient you can do an account to see doctors, and make your appointments
 
 ## Techincal Structure Project
 
@@ -90,7 +91,7 @@ See the docs: https://sequelize.org/docs/v6/other-topics/migrations/#:~:text=Cre
 
 _Note: You dont' need execute migrations, these are executed when the server is running. This is only extra information to know how the migrations can be charged in database_
 
-## See the documentation End Points 📃
+## See the End Points documentation 📃
 
 To see the documentation you need running the project and go to the url /docs
 
