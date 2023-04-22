@@ -1,3 +1,4 @@
+/** Import local modules */
 import models from '../../database/models';
 import { create, findAll, findOne } from '../utils/crud';
 import { getResponse, httpResponse } from '../utils/responses';
@@ -5,8 +6,10 @@ import message from '../utils/constants';
 import { getDatesMonthInLocalZone, getRangeDayUTCfromLZ } from '../utils/dates';
 import { TIME_ZONE } from '../../config/environment';
 
+/** Import external modules */
 import { Op } from 'sequelize';
 
+/** Define model names */
 const Schedule = models.schedules;
 const Doctor = models.doctors;
 

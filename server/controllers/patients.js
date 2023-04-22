@@ -1,8 +1,10 @@
+/** Import local modules */
 import models from '../../database/models';
 import { create } from '../utils/crud';
 import { getResponse, httpResponse } from '../utils/responses';
 import { encryptPassword } from '../utils/auxiliaries';
 
+/** Define model names */
 const User = models.users;
 const Patient = models.patients;
 
