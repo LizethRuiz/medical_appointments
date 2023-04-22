@@ -27,14 +27,14 @@ const getSchedule = async (req, res) => {
   try {
     let { doctorId, month, year, timeZone } = req.query;
 
-    let data = {
+    let dataQuery = {
       model: Schedule,
       where: { deleted: false },
       order: [['startDate', 'DESC']],
       include: { model: Doctor },
     };
 
-    if (doctorId) data.include.where = { id: doctorId };
+    if (doctorId) dataQuery.include.where = { id: doctorId };
 
     if (month) {
       year = year ? year : new Date().getFullYear();
@@ -48,7 +48,7 @@ const getSchedule = async (req, res) => {
       );
 
       /**Add the conditions to filter according previos dates*/
-      data.where[Op.or] = {
+      dataQuery.where[Op.or] = {
         startDate: {
           [Op.and]: {
             [Op.gte]: startUTC,
@@ -65,7 +65,7 @@ const getSchedule = async (req, res) => {
     }
 
     /**Call function to make query in database */
-    const schedules = await findAll(data);
+    const schedules = await findAll(dataQuery);
 
     return httpResponse(201, schedules, res);
   } catch (error) {
@@ -112,7 +112,7 @@ const availabilitySchedule = async (date, doctorId, timeZone) => {
   try {
     let response = true;
 
-    let data = {
+    let dataQuery = {
       model: Schedule,
       where: { doctorId, deleted: false },
     };
@@ -121,7 +121,7 @@ const availabilitySchedule = async (date, doctorId, timeZone) => {
     const { startUTC, endUTC } = await getRangeDayUTCfromLZ(date, timeZone);
 
     /**Create the conditions to filter schedule between previos dates */
-    data.where[Op.or] = {
+    dataQuery.where[Op.or] = {
       startDate: {
         [Op.and]: {
           [Op.gte]: startUTC,
@@ -136,7 +136,7 @@ const availabilitySchedule = async (date, doctorId, timeZone) => {
       },
     };
 
-    let findSchedule = await findOne(data);
+    let findSchedule = await findOne(dataQuery);
 
     /** When there aren't schedule the function returns false */
     if (!findSchedule) response = false;
