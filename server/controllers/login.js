@@ -47,7 +47,7 @@ const signIn = async (req, res) => {
 
     const user = await findOne(dataQuery);
 
-    /** If user didn't find, response status 400 */
+    /** If user wasn't found, response status 400 */
     if (!user) return httpResponse(400, message.invalidCredentials, res);
 
     /** If password doesn't match response status 400 */

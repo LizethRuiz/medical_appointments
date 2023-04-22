@@ -1,4 +1,5 @@
-/** Here we have a object with the properties that are used in deferents parts of project to manage messages */
+/** Here we have a object with the properties
+ * that are used in deferents parts of project to manage messages */
 module.exports = {
   //Global Alert Messages
   elementNotFound: 'Element not found',
@@ -36,6 +37,7 @@ module.exports = {
   doctorReq: 'The doctor Id is required',
   busySchedule: 'This schedule has already been taken ',
   doctorNotFound: 'Doctor registry not found',
+  availableSchedule: 'This schedule is available',
 
   //Login
   invalidCredentials: 'Your credentials are invalid',

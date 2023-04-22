@@ -1,10 +1,10 @@
 import message from './constants';
 
-/**This function permit to get a instance of model, calling the findOne funtion sequelize
+/**This function permit to get a instance of model, calling the findOne function sequelize
  * Parameters:
  * data object with properties and values to make query in database, as model, where, attributes, order, include
  * Response:
- * Raise a error when element not found
+ * Raise an error when element not found
  * Response the instance
  */
 const findOne = async (data) => {

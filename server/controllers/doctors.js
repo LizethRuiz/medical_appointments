@@ -26,7 +26,7 @@ const Address = models.addresses;
  * -FullAddress
  * Responses:
  * 400 -> We get a 400 when exist a bad request
- * 201 -> We get a 201 when the doctor account was created
+ * 201 -> We get a 201 when the doctor account was create
  */
 const createRegistry = async (req, res) => {
   try {
