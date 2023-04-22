@@ -24,7 +24,7 @@ const createRegistry = async (req, res) => {
   try {
     const { body } = req;
 
-    /**Calling the function to encryp password */
+    /**Calling the function to encrypt password */
     body.password = encryptPassword(body.password);
 
     /** Calling function that insert in the database */

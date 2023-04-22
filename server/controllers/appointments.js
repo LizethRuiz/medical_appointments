@@ -19,11 +19,11 @@ const User = models.users;
  * - startDate -> Example: 2023-04-21T19:20:00.000Z
  * - endDate -> Example:"2023-04-22T20:00:00.000Z"
  * - doctorId -> Example: 1
- * Response: We get a appointments' list scheduled
+ * Response: We get appointments' list scheduled
  *  */
 const findCrossedAppointment = async (startDate, endDate, doctorId) => {
   try {
-    /** DataQuery is an object where properties permit to Sequelice
+    /** DataQuery is an object where properties permit to Sequelize
      * make the request to database, the properties are:
      * - model: We indicate the model that need to do a query
      * - where: Is the clause in SQL to condition the query, in this case use the Op or (from sequelize ORM)
@@ -67,10 +67,10 @@ const findCrossedAppointment = async (startDate, endDate, doctorId) => {
   }
 };
 
-/** This controller uses the before function to get appointments crossed with dates and doctor parameters
+/** This controller uses the previous function to get appointments crossed with dates and doctor parameters
  * Responses:
  * - 400 -> We get a 400 status when a appointment with start, end date and doctor isn't available
- * - 200 -> We get a 200 with the appointments' list scheduled
+ * - 200 -> We get a 200 with a message "This schedule is available"
  */
 const checkAvailability = async (req, res) => {
   try {
@@ -83,7 +83,11 @@ const checkAvailability = async (req, res) => {
       doctorId
     );
 
-    if (appointments.rows.length !== 0)
+    /** Appointmets list has count and rows properties,
+     * where rows contains the elements and count the number of these
+     * If count is not 0 indicate that there are appointments scheduled
+     *  */
+    if (appointments.count !== 0)
       return httpResponse(400, message.busySchedule, res);
 
     return httpResponse(200, message.availableSchedule, res);
@@ -98,10 +102,10 @@ const checkAvailability = async (req, res) => {
  * - startDate: Example -> 2023-04-21T21:20:00.000Z (UTC Date)
  * - doctorId: Example -> 1
  * In the database is saved a endDate to appointment registry
- *  (This value is calculated taking the startDate and adding 40 minutes)
+ *  (This value is calculated taking the startDate and adding 40 minutes, duration for the appointment)
  * Responses:
  * - 400 -> We get a 400 status when validators module raise exception
- * - 201 -> We get a 201 when the appointment was create
+ * - 201 -> We get a 201 when the appointment was created
  */
 const createAppointment = async (req, res) => {
   try {
@@ -121,7 +125,7 @@ const createAppointment = async (req, res) => {
  * - if I'm a doctor I'm gonna get appointments with my doctor Id
  * The above is thanks to the user property in req that contains information about the user
  * Responses:
- * 201 -> We get a 200 when the appointment's list
+ * 201 -> We get a 200 when the appointments' list
  */
 const getAppointments = async (req, res) => {
   try {
@@ -147,7 +151,7 @@ const getAppointments = async (req, res) => {
       order: [['startDate', 'DESC']],
     };
 
-    /** Condition in include to filter  the appointments, when the user is doctor o patient */
+    /** Condition in include to filter the appointments, when the user is doctor o patient */
     if (user.doctor) {
       dataQuery.include[1].where = {
         id: user.doctor.id,
@@ -160,6 +164,7 @@ const getAppointments = async (req, res) => {
       };
     }
 
+    /**calling funtion tha make the request in database */
     const appointment = await findAll(dataQuery);
 
     return httpResponse(200, appointment, res);

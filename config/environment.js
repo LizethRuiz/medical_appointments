@@ -1,18 +1,18 @@
 /** Import dotenv package to charge environment variables from .env file */
-import dotenv from 'dotenv'
-dotenv.config()
-/** Create object where each property representate an environment value from process.env:
+import dotenv from 'dotenv';
+dotenv.config();
+/** Create object where each property take an environment value from process.env:
  * - PORT: Server port
  * - DB: Connection parameters for database instance
  * - JWT: Parameters to perform and verify JWT
-*/
+ */
 
 /** We have constants values to dialect and time zone */
-const DEFAULT_DB_DIALECT = 'postgres'
-const DEFAULT_TIME_ZONE = 'America/Mazatlan'
+const DEFAULT_DB_DIALECT = 'postgres';
+const DEFAULT_TIME_ZONE = 'America/Mazatlan';
 
 module.exports = {
-  PORT: process.env.PORT, 
+  PORT: process.env.PORT,
   DB: {
     HOST: process.env.DB_HOST,
     NAME: process.env.DB_NAME,

@@ -13,7 +13,7 @@ import { Op } from 'sequelize';
 const Schedule = models.schedules;
 const Doctor = models.doctors;
 
-/** This controller permit to get a schedule's list ,
+/** This controller permit to get a schedules' list ,
  * Query parameters:
  * To filter the schedule by month
  * - month
@@ -34,10 +34,14 @@ const getSchedule = async (req, res) => {
       include: { model: Doctor },
     };
 
+    /**If query has doctorId property, add the condition in dataQuery object
+     * to make the query in database */
     if (doctorId) dataQuery.include.where = { id: doctorId };
 
     if (month) {
+      /**If query doesn't have year, take the current year*/
       year = year ? year : new Date().getFullYear();
+      /**If query doesn't have timeZone, take the default timeZone setting */
       timeZone = timeZone ? timeZone : TIME_ZONE;
 
       /** We get a two dates, they are range of month UTC from Local Zone */

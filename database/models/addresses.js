@@ -1,5 +1,5 @@
 'use strict';
-/** Each model class representates a database table, in the model we can define:
+/** Each model class representate a database table, in the model we can define:
  * In the init method indicate the fields and their properties
  * Here indicate associations with other models, for example the addresses table has a relation 1:1 with doctors table
  */
