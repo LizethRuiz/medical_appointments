@@ -9,7 +9,643 @@
   "basePath": "/api/v1",
   "consumes": ["application/json"],
   "produces": ["application/json"],
-  "paths": {},
+  "paths": {
+    "/api/v1/doctors/registry": {
+      "post": {
+        "tags": ["Doctors"],
+        "operationId": "createDoctorRegistry",
+        "summary": "Add Doctor Account",
+        "description": "Add the information required to create a doctor account",
+        "requestBody": {
+          "description": "Data to create an account",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "name": { "type": "string", "example": "Juan" },
+                  "lastName": { "type": "string", "example": "Perez" },
+                  "email": {
+                    "type": "string",
+                    "example": "juanperez@gmail.com"
+                  },
+                  "password": {
+                    "type": "string",
+                    "example": "mipassword"
+                  },
+                  "phone": {
+                    "type": "string",
+                    "example": "6681243089"
+                  },
+                  "speciality": {
+                    "type": "string",
+                    "example": "Medicina General"
+                  },
+                  "license": {
+                    "type": "string",
+                    "example": "120938"
+                  },
+                  "state": {
+                    "type": "string",
+                    "example": "Sinaloa"
+                  },
+                  "city": {
+                    "type": "string",
+                    "example": "Los Mochis"
+                  },
+                  "fullAddress": {
+                    "type": "string",
+                    "example": "Col.Centro calle Carranza 894"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Doctor account created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "id": { "type": "integer", "example": 2 },
+                    "speciality": {
+                      "type": "string",
+                      "example": "Medicina General"
+                    },
+                    "license": {
+                      "type": "string",
+                      "example": "120938"
+                    },
+                    "userId": {
+                      "type": "integer",
+                      "example": 3
+                    },
+                    "addressId": {
+                      "type": "integer",
+                      "example": 3
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request",
+            "schema": {
+              "type": "object",
+              "example": [
+                {
+                  "errors": "Name is required"
+                },
+                {
+                  "errors": "Last name is required"
+                },
+                {
+                  "errors": "Email is required"
+                },
+                {
+                  "errors": "Invalid email"
+                },
+                {
+                  "errors": "This email already exists"
+                },
+                {
+                  "errors": "Password is required"
+                },
+                {
+                  "errors": "Password must be min 8 characters"
+                },
+                {
+                  "errors": "Phone is required"
+                },
+                {
+                  "errors": "Phone must be min 10 characters"
+                },
+                {
+                  "errors": "Speciality is required"
+                },
+                {
+                  "errors": "Professional License is required"
+                },
+                {
+                  "errors": "Professional License is invalid must be 7 or 8 characters"
+                },
+                {
+                  "errors": "State is required"
+                },
+                {
+                  "errors": "City is required"
+                },
+                {
+                  "errors": "Full address is required"
+                }
+              ]
+            }
+          },
+          "401": {
+            "description": "This endpoint is secured - **Token required**."
+          },
+          "default": {
+            "description": "Unexpected response - internal error"
+          }
+        },
+        "security": [{ "token": ["write"] }]
+      }
+    },
+    "/api/v1/doctors": {
+      "get": {
+        "tags": ["Doctors"],
+        "operationId": "get",
+        "summary": "Doctors' list",
+        "description": "Returns available doctors, if you are a patient or doctor registered you can see a doctors' list",
+        "responses": {
+          "200": {
+            "description": "The requested data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "count": 2,
+                    "rows": [
+                      {
+                        "id": 4,
+                        "license": "1234567",
+                        "speciality": "Medico General",
+                        "user": {
+                          "name": "Juan",
+                          "lastName": "Perez",
+                          "email": "juanperez@gmail.com"
+                        },
+                        "address": {
+                          "state": "Sinaloa",
+                          "city": "Los Mochis",
+                          "fullAddress": "Col.Centro. Calle Guillermo Prieto #2345"
+                        }
+                      },
+                      {
+                        "id": 2,
+                        "license": "1234567",
+                        "speciality": "Medico General",
+                        "user": {
+                          "name": "Lizeth",
+                          "lastName": "Ruiz",
+                          "email": "diana@gmail.com"
+                        },
+                        "address": {
+                          "state": "Sinaloa",
+                          "city": "Los Mochis",
+                          "fullAddress": "Col.Centro. Calle Guillermo Prieto #2345"
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "This endpoint is secured - **Token required**."
+          },
+          "default": {
+            "description": "Unexpected response - internal error"
+          }
+        },
+        "security": [{ "token": ["read"] }]
+      }
+    },
+    "/api/v1/patients/registry": {
+      "post": {
+        "tags": ["Patients"],
+        "operationId": "createPatientRegistry",
+        "summary": "Add Patients Account",
+        "description": "Add the information required to create a patients account",
+        "requestBody": {
+          "description": "Data to create an account",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "name": { "type": "string", "example": "Juan" },
+                  "lastName": { "type": "string", "example": "Perez" },
+                  "email": {
+                    "type": "string",
+                    "example": "juanperez@gmail.com"
+                  },
+                  "password": {
+                    "type": "string",
+                    "example": "mipassword"
+                  },
+                  "phone": {
+                    "type": "string",
+                    "example": "6681243089"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Doctor account created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "id": { "type": "integer", "example": 2 },
+                    "age": { "type": "integer", "example": null },
+                    "allergies": { "type": "string", "example": null },
+                    "userId": {
+                      "type": "integer",
+                      "example": 3
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request",
+            "schema": {
+              "type": "object",
+              "example": [
+                {
+                  "errors": "Name is required"
+                },
+                {
+                  "errors": "Last name is required"
+                },
+                {
+                  "errors": "Email is required"
+                },
+                {
+                  "errors": "Invalid email"
+                },
+                {
+                  "errors": "This email already exists"
+                },
+                {
+                  "errors": "Password is required"
+                },
+                {
+                  "errors": "Password must be min 8 characters"
+                },
+                {
+                  "errors": "Phone is required"
+                },
+                {
+                  "errors": "Phone must be min 10 characters"
+                }
+              ]
+            }
+          },
+          "401": {
+            "description": "This endpoint is secured - **Token required**."
+          },
+          "default": {
+            "description": "Unexpected response - internal error"
+          }
+        },
+        "security": [{ "token": ["write"] }]
+      }
+    },
+    "/api/v1/login": {
+      "post": {
+        "tags": ["Login"],
+        "operationId": "Login",
+        "summary": "Login",
+        "description": "Login accounts doctors and patients",
+        "requestBody": {
+          "description": "Payload with email and password",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["email", "password"],
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "description": "Email"
+                  },
+                  "password": {
+                    "type": "string",
+                    "description": "Contraseña"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Login User",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "payload": {
+                      "type": "object",
+                      "example": {
+                        "id": 5,
+                        "email": "juanperez@gmail.com",
+                        "name": "Juan",
+                        "lastName": "Perez"
+                      }
+                    },
+                    "token": { "type": "string", "example": "eyJH..." }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request",
+            "schema": {
+              "type": "object",
+              "example": [
+                {
+                  "errors": "Email is required"
+                },
+                {
+                  "errors": "Password is required"
+                }
+              ]
+            }
+          },
+          "default": {
+            "description": "Unexpected response - internal error"
+          }
+        },
+        "security": [{ "token": ["write"] }]
+      }
+    },
+    "/api/v1/schedule": {
+      "get": {
+        "tags": ["Schedule"],
+        "operationId": "get",
+        "summary": "Doctors' schedules",
+        "description": "Returns the schedule from specific doctor and filetr by month",
+        "parameters": [
+          {
+            "in": "query",
+            "description": "This considerates a specific doctor",
+            "name": "doctorId",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "$ref": "#/parameters/month"
+          },
+          {
+            "$ref": "#/parameters/year"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The requested data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "count": 1,
+                    "rows": [
+                      {
+                        "id": 6,
+                        "startDate": "2023-05-20T00:00:00.000Z",
+                        "endDate": "2023-05-21T00:00:00.000Z",
+                        "deleted": false,
+                        "createdAt": "2023-04-22T13:45:25.180Z",
+                        "updatedAt": "2023-04-22T13:45:25.180Z",
+                        "doctorId": 3,
+                        "doctor": {
+                          "id": 3,
+                          "speciality": "Medico General",
+                          "license": "1234567",
+                          "deleted": false,
+                          "createdAt": "2023-04-22T13:44:33.578Z",
+                          "updatedAt": "2023-04-22T13:44:33.578Z",
+                          "addressId": 3,
+                          "userId": 5
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "This endpoint is secured - **Token required**."
+          },
+          "default": {
+            "description": "Unexpected response - internal error"
+          }
+        },
+        "security": [{ "token": ["read"] }]
+      },
+      "post": {
+        "tags": ["Schedule"],
+        "operationId": "createSchedule",
+        "summary": "Add Schedule",
+        "description": "As doctor user you can add your schedule",
+        "requestBody": {
+          "description": "Data to create a schedule",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "dates": {
+                    "type": "array",
+                    "example": "[{'startDate':'2023-05-20','endDate':'2023-05-21'}] }"
+                  }
+                }
+              }
+            }
+          },
+          "responses": {
+            "201": {
+              "description": "Information has been added",
+              "content": {}
+            },
+            "400": {
+              "description": "Invalid request",
+              "schema": {
+                "type": "object",
+                "example": [
+                  {
+                    "errors": "Dates are required"
+                  },
+                  {
+                    "errors": "Start date is required"
+                  },
+                  {
+                    "errors": "Finish date is required"
+                  }
+                ]
+              }
+            },
+            "401": {
+              "description": "This endpoint is secured - **Token required**."
+            },
+            "default": {
+              "description": "Unexpected response - internal error"
+            }
+          },
+          "security": [{ "token": ["write"] }]
+        }
+      }
+    },
+    "/api/v1/appointments": {
+      "get": {
+        "tags": ["Appointments"],
+        "operationId": "get",
+        "summary": "My appointments",
+        "description": "Returns the appointments scheduled as doctor o patient",
+        "responses": {
+          "200": {
+            "description": "The requested data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "count": 1,
+                    "rows": [
+                      {
+                        "id": 3,
+                        "startDate": "2023-05-21T21:20:00.000Z",
+                        "endDate": "2023-05-21T22:00:00.000Z",
+                        "notes": null,
+                        "canceled": false,
+                        "createdAt": "2023-04-22T13:47:31.895Z",
+                        "updatedAt": "2023-04-22T13:47:31.895Z",
+                        "patientId": 3,
+                        "doctorId": 3,
+                        "patient": {
+                          "id": 3,
+                          "user": {
+                            "name": "Perla",
+                            "lastName": "Ruiz",
+                            "email": "perla@gmail.com"
+                          }
+                        },
+                        "doctor": {
+                          "id": 3,
+                          "license": "1234567",
+                          "speciality": "Medico General",
+                          "user": {
+                            "name": "Juan",
+                            "lastName": "Juan",
+                            "email": "juanperez@gmail.com"
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "This endpoint is secured - **Token required**."
+          },
+          "default": {
+            "description": "Unexpected response - internal error"
+          }
+        },
+        "security": [{ "token": ["read"] }]
+      },
+      "post": {
+        "tags": ["Appointments"],
+        "operationId": "createAppointment",
+        "summary": "Add Appointment",
+        "description": "As patient user you can schedule a appointment",
+        "requestBody": {
+          "description": "Data to create a appointment",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "startDate": {
+                    "type": "date",
+                    "example": "2023-05-21T21:20:00.000Z"
+                  },
+                  "doctorId": {
+                    "type": "integer",
+                    "example": 3
+                  }
+                }
+              }
+            }
+          },
+          "responses": {
+            "201": {
+              "description": "Information has been added",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "properties": {
+                      "startDate": {
+                        "type": "date",
+                        "example": "2023-05-20T20:20:00.000Z"
+                      },
+                      "endDate": {
+                        "type": "date",
+                        "example": "2023-05-20T21:00:00.000Z"
+                      },
+                      "doctorId": {
+                        "type": "integer",
+                        "example": 3
+                      },
+                      "patientId": {
+                        "type": "integer",
+                        "example": 3
+                      },
+                      "notes": {
+                        "type": "string",
+                        "example": null
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Invalid request",
+              "schema": {
+                "type": "object",
+                "example": [
+                  {
+                    "errors": "Date and hour are required"
+                  },
+                  {
+                    "errors": "The doctor Id is required"
+                  },
+                  {
+                    "errors": "Doctor registry not found"
+                  },
+                  {
+                    "errors": "This schedule has already been taken"
+                  }
+                ]
+              }
+            },
+            "401": {
+              "description": "This endpoint is secured - **Token required**."
+            },
+            "default": {
+              "description": "Unexpected response - internal error"
+            }
+          },
+          "security": [{ "token": ["write"] }]
+        }
+      }
+    }
+  },
   "components": {
     "securitySchemes": {
       "bearerAuth": {

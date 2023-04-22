@@ -89,3 +89,9 @@ See the docs: https://sequelize.org/docs/v6/other-topics/migrations/#:~:text=Cre
 `npx sequelize db:migrate --url "postgres://DB_USER:DB_PASSWORD@DB_HOST:DB_PORT/DB_NAME"`
 
 _Note: You dont' need execute migrations, these are executed when the server is running. This is only extra information to know how the migrations can be charged in database_
+
+## See the documentation End Points 📃
+
+To see the documentation you need running the project and go to the url /docs
+
+http://localhost:5050/docs
