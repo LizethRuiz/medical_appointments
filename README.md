@@ -130,7 +130,7 @@ In this folder we have the index file with the database connections, also the mi
 
 In the file environemnt, there is an object with env variables that are used in differents parts of the project
 
-# Run the Project 🚀
+## Run the Project 🚀
 
 To execute the project, you can do it in two ways, the first one without manage containers, and the second one using docker container
 
@@ -174,6 +174,6 @@ _Note: You dont' need execute migrations, these are executed when the server is 
 
 ## See the End Points documentation 📃
 
-To see the documentation you need running the project and go to the url /docs
+To see the documentation you need running the project and go to the url `/docs`
 
 http://localhost:5050/docs
