@@ -7,6 +7,87 @@ This is a project that permit to manage medical appointments
 - 👩🏼‍⚕️👨🏼‍⚕️ If you are a doctor you can do an account and start to add your schedule, see your appointments scheduled by patients
 - 🤒 If you are a patient you can do an account to see doctors, and make your appointments
 
+### Main Entities
+
+Entity Diagram Meanings
+
+| Value (left) | Value (right) | Meaning                       |
+| ------------ | ------------- | ----------------------------- |
+| \|o          | o\|           | Zero or one                   |
+| \|\|         | \|\|          | Exactly one                   |
+| }o           | o{            | Zero or more (no upper limit) |
+| }\|          | \|{           | One or more (no upper limit)  |
+
+- PK -> PrimaryKey
+- FK -> ForeignKey
+
+```mermaid
+erDiagram
+
+  USER {
+    integer id PK
+    string name
+    string lastName
+    string email
+    string password
+    string phone
+    boolean deleted
+    date createdAt
+    date updatedAt
+  }
+
+  DOCTOR {
+    integer id PK
+    string license
+    string speciality
+    integer userId FK
+    integer addressId FK
+    boolean deleted
+    date createdAt
+    date updatedAt
+  }
+
+  PATIENT {
+    integer id PK
+    string allergies
+    integer age
+    boolean deleted
+    integer userId FK
+    date createdAt
+    date updatedAt
+  }
+
+  SCHEDULE {
+    integer id Pk
+    date startDate
+    date endDate
+    integer doctorId FK
+    boolean deleted
+    date createdAt
+    date updatedAt
+  }
+
+  APPOINTMENT {
+    integer id Pk
+    date startDate
+    date endDate
+    string notes
+    integer doctorId FK
+    integer patientId FK
+    boolean deleted
+    boolean canceled
+    date createdAt
+    date updatedAt
+  }
+
+  DOCTOR ||--|| USER : contains
+  DOCTOR ||--o{ SCHEDULE : creates
+  DOCTOR ||--o{ APPOINTMENT : contains
+  PATIENT ||--o{ APPOINTMENT : creates
+  PATIENT ||--|| USER : contains
+
+```
+
 ## Techincal Structure Project
 
 The stack in this project have the next technologies:
