@@ -1,8 +1,8 @@
 # Medical Appointments 👩🏼‍⚕️
 
-# Structure Project
+## Structure Project
 
-The stack in this project are the next technologies:
+The stack in this project have the next technologies:
 
 - Node Js -> Environment to write code with JavaScript from server side. Download in https://nodejs.org/es/download/
 - Express -> Framework (https://expressjs.com/es/starter/hello-world.html)
@@ -14,13 +14,13 @@ The stack in this project are the next technologies:
   - [server](#server)
   - [database](#database)
   - [config](#config)
-- [Ejecutar proyecto🚀](#ejecutar-proyecto-🚀)
-  - [Simple ejecución](#simple-ejecución)
-  - [Utilizando Docker](#utilizando-docker)
-- [Manejo de Sequelize CLI](#manejo-de-sequelize-cli)
-  - [Crear un modelo](#1-crear-modelo-y-migración)
-  - [Crear una migración](#2-crear-migraciones)
-  - [Ejecutar migraciones](#3-ejecutar-migraciones)
+- [Run the Project🚀](#run-the-project-🚀)
+  - [Simple execution](#simple-execution)
+  - [Using Docker](#using-docker)
+- [Using Sequelize CLI](#using-sequelize-cli)
+  - [Create Models](#1-create-model-and-migration)
+  - [Create Migrations](#2-create-migrations)
+  - [Exect Migrations](#3-exec-migrations)
 
 ## Folder Structure 📁
 
@@ -28,9 +28,9 @@ The stack in this project are the next technologies:
 
 The server folder contains the logic of business
 
-- _index.js_ -> Here we create the express instance, eventually add middlewares,
-- _controllers_ -> This folder contains the functions that permit do use cases of logical business,
-- _middlewares_ -> Contains functions that work like intermediaries in the request.
+- _index.js_ -> Here we create the express instance, eventually add middlewares.
+- _controllers_ -> This folder contains the functions that permit develop the logical business,
+- _middlewares_ -> Contains functions that work like intermediaries in the requests.
 - _routes_ -> Files that containts the routes' names or end points.
 - _utils_ -> Contains functions that works as auxiliaries
 
@@ -40,7 +40,7 @@ In this folder we have the index file with the database connections, also the mi
 
 ## config
 
-In the file environemnt, there are an object with env variables that are used in differents parts of the project
+In the file environemnt, there is an object with env variables that are used in differents parts of the project
 
 # Run the Project 🚀
 
@@ -48,7 +48,7 @@ To execute the project, you can do it in two ways, the first one without manage 
 
 ## Simple execution
 
-To execute the proyect, you should do the next steps:
+To execute the project, you should do the next steps:
 
 1. Install Node JS in your OS
 2. Install PostgreSQL
@@ -60,15 +60,14 @@ To execute the proyect, you should do the next steps:
 
 ## Using Docker
 
-1. You have to have installed docker in your OS
+1. You have to have installed Docker in your OS
 2. In the project's root create a file called .env where you will put the environment variables, you should take the .env.example file as a reference
 3. `docker compose up --build`: Execute de command to build the container
 4. `docker compose up`: To up the project you only need this command
 
 ## Using Sequelize CLI
 
-Como se comenta al inicio, este proyecto trabaja con el ORM sequelize, por lo tanto muchas de las acciones que podemos hacer en la capa de datos podemos trabajarlas con la CLI de Sequelize, tareas como **crear modelos(tablas)**, **crear y ejecutar migraciones**, **crear y ejecutar seeders**, son operaciones que las podemos hacer desde nuestra terminal, para ello te listo abajo como puedes hacerlo:
-This project uses the Sequelize OR, there are many actions that we can do from this **Create models(tables)**, **create and execute migrations**, **create and execute seeders**:
+This project uses the Sequelize ORM, there are many actions that we can do from this **Create models(tables)**, **create and execute migrations**, **create and execute seeders**:
 
 ### 1. Create model and migration
 
