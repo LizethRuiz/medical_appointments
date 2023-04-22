@@ -1,0 +1,35 @@
+version: "3.4"
+
+services:
+  postgres:
+    image: "postgres:14"
+    ports:
+      - 5434:5432
+    environment:
+      - POSTGRES_USER=appointment_user
+      - POSTGRES_DB=appointment_db
+      - POSTGRES_PASSWORD=appointmentpassword
+    volumes:
+      - "pgdata-backend:/var/lib/postgresql/data"
+
+  api:
+    depends_on:
+      - postgres
+    build:
+      dockerfile: Dockerfile
+      context: .
+      target: base
+    restart: unless-stopped
+    ports:
+      - "5050:5050"
+    volumes:
+      - .:/app
+      - ./package.json:/package.json
+      - ./package-lock.json:/package-lock.json
+      - notused:/node_modules
+    env_file:
+      - .env
+
+volumes:
+  pgdata-backend:
+  notused:

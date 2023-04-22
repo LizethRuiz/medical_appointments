@@ -1,0 +1,77 @@
+{
+  "openapi": "3.0.0",
+
+  "info": {
+    "title": "Medical Appointments API",
+    "description": "Medical Appointments API",
+    "version": "1.0.0"
+  },
+  "basePath": "/api/v1",
+  "consumes": ["application/json"],
+  "produces": ["application/json"],
+  "paths": {},
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  },
+  "security": { "bearerAuth": [] },
+  "parameters": {
+    "page": {
+      "in": "query",
+      "description": "Number of page",
+      "name": "page",
+      "required": false,
+      "type": "integer"
+    },
+    "pageSize": {
+      "in": "query",
+      "description": "Length of the pagination",
+      "name": "pageSize",
+      "required": false,
+      "type": "integer"
+    },
+    "month": {
+      "in": "query",
+      "description": "Month and Year filter. Both fields are considered to filter in that range, Ejemplo: 3",
+      "name": "month",
+      "required": false,
+      "type": "number"
+    },
+    "year": {
+      "in": "query",
+      "description": "Month and Year filter. Both fields are considered to filter in that range, Ejemplo: 2023",
+      "name": "year",
+      "required": false,
+      "type": "number"
+    },
+    "date": {
+      "in": "query",
+      "description": "To filter a specific day use query date, Ejemplo: 2023-03-15T20:00:00.000Z",
+      "name": "date",
+      "required": false,
+      "type": "string"
+    },
+    "id": {
+      "in": "path",
+      "description": "ID of data object, e.g. \"1\"",
+      "name": "id",
+      "required": true,
+      "type": "string"
+    },
+    "DataObject": {
+      "in": "body",
+      "description": "Data to save with given ID",
+      "name": "data",
+      "required": true,
+      "schema": {
+        "type": "object",
+        "properties": { "name": { "type": "string", "example": "John Doe" } }
+      }
+    }
+  }
+}

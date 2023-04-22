@@ -1,0 +1,44 @@
+{
+  "name": "appointments-back",
+  "version": "1.0.0",
+  "description": "Appointments API",
+  "main": "index.js",
+  "scripts": {
+    "dev": "npm run migrateandseed && nodemon --signal SIGHUP --exec babel-node index.js",
+    "start": "npm run migrateandseed && babel-node -- index.js",
+    "seed": "babel-node -- server/seeds/index.js",
+    "eslint": "eslint .",
+    "migrateandseed": "babel-node -- migrateExecutor.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "date-fns": "^2.29.3",
+    "date-fns-tz": "^2.0.0",
+    "dotenv": "^16.0.0",
+    "express": "^4.17.3",
+    "express-validator": "^6.14.0",
+    "generate-password": "^1.7.0",
+    "jsonwebtoken": "^8.5.1",
+    "nodemailer": "^6.8.0",
+    "pg": "^8.7.3",
+    "pg-hstore": "^2.3.4",
+    "sequelize": "^6.16.1",
+    "sequelize-cli": "^6.4.1",
+    "swagger-jsdoc": "^6.2.7",
+    "swagger-ui-express": "^4.6.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.17.9",
+    "@babel/node": "^7.16.8",
+    "@babel/preset-env": "^7.16.11",
+    "eslint": "^8.13.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "nodemon": "^2.0.16",
+    "pre-commit": "^1.2.2",
+    "prettier": "^2.6.2"
+  }
+}
