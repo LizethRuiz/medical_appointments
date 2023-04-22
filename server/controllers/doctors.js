@@ -1,6 +1,6 @@
 /** Import local modules */
 import models from '../../database/models';
-import { create } from '../utils/crud';
+import { create, findAll } from '../utils/crud';
 import { getResponse, httpResponse } from '../utils/responses';
 import { encryptPassword } from '../utils/auxiliaries';
 

@@ -17,7 +17,7 @@ module.exports = {
   passwordReq: 'Password is required',
   invalidPassword: 'Password must be min 8 characters',
   phoneReq: 'Phone is required',
-  invalidPhone: 'Phone mus be min 10 characters',
+  invalidPhone: 'Phone must be min 10 characters',
 
   //Doctor Registry Alert Messages
   specialityReq: 'Speciality is required',
